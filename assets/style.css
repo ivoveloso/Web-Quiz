@@ -64,6 +64,10 @@ label{
 
 #response h3{font:normal bold 1.2em/1.5em "Helvetica Neue", Helvetica, Arial, sans-serif; margin:5px 0;}
 
-.hide {
+#check {
     display: none;
+}
+
+.unhide {
+    display: block !important;
 }

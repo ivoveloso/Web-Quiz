@@ -10,59 +10,80 @@
     var timerEl = document.getElementById('timer');
     var currentQuestion = 0;
     var score = 0;
-    var askingQuestion = true;  
+    var askingQuestion = true;
+	var checkEl = document.getElementById("check");
+	var questionEl = document.getElementById('question');
     var quiz = [
         {
-            "question"		: 	"Q1: Who came up with theory of relativity?",
+            "question"		: 	"Q1: Commonly used data types DO NOT include",
             "choices"		: 	[
-                                    "Sir Isaac Newton",
-                                    "Nicolaus Copernicus",
-                                    "Albert Einstein",
-                                    "Ralph Waldo Emmerson"
+                                    "strings",
+                                    "booleans",
+                                    "alerts",
+                                    "numbers"
                                 ],
-            "correct"		: 	"Albert Einstein",
-            "explanation"	: 	"Albert Einstein drafted the special theory of relativity in 1905.",
+            "correct"		: 	"alerts",
+            "explanation"	: 	"Alerts are a method.",
             
         },
         {
-            "question"		: 	"Q2: Who is on the two dollar bill?",
+            "question"		: 	"Q2: Arrays in JavaScript can be used to store ________",
             "choices"		: 	[
-                                    "Thomas Jefferson",
-                                    "Dwight D. Eisenhower",
-                                    "Benjamin Franklin",
-                                    "Abraham Lincoln"
+                                    "numbers and strings",
+                                    "other arrays",
+                                    "booleans",
+                                    "all of the above"
                                 ],
-            "correct"		: 	"Thomas Jefferson",
-            "explanation"	: 	"The two dollar bill is seldom seen in circulation. As a result, some businesses are confused when presented with the note.",
+            "correct"		: 	"all of the above",
+            "explanation"	: 	"Arrays is JavaScript can store all the above elements",
         },
         {
-            "question"		: 	"Q3: What event began on April 12, 1861?",
+            "question"		: 	"Q3: String values must be enclosed within ______ when being assigned to variables",
             "choices"		: 	[
-                                    "First manned flight",
-                                    "California became a state",
-                                    "American Civil War began",
-                                    "Declaration of Independence"
+                                    "commas",
+                                    "curly brackets",
+                                    "quotes",
+                                    "parenthesis"
                                 ],
-            "correct"		: 	"American Civil War began",
-            "explanation"	: 	"South Carolina came under attack when Confederate soldiers attacked Fort Sumter. The war lasted until April 9th 1865.",
+            "correct"		: 	"quotes",
+            "explanation"	: 	"Quotes are required to show that the value is a string",
+        },
+		{
+            "question"		: 	"Q4: A very useful tool used during development and debugging for printing content to the debugger is:",
+            "choices"		: 	[
+                                    "JavaScript",
+                                    "terminal / bash",
+                                    "for loops",
+                                    "console.log"
+                                ],
+            "correct"		: 	"console.log",
+            "explanation"	: 	"With console.log you can use console to log what is happening to your application.",
+        },
+		{
+            "question"		: 	"Q5: The condition in an if / else statement is enclosed within ______.",
+            "choices"		: 	[
+                                    "commas",
+                                    "curly brackets",
+                                    "square brackets",
+                                    "parenthesis"
+                                ],
+            "correct"		: 	"parenthesis",
+            "explanation"	: 	"Parenthesis are the corect syntax",
         },
 
     ];
 
-    startbtnEl.onclick = startquiz();
-
     var timerid;
     var timeleft = 100;
 
-      function startquiz() {
-
-        console.log('startquiz');
+    function startquiz() {
 
         timerid = setInterval(timercallback, 1000);
         timerEl.textContent = `Time Left: 100 secs.`;
-
-        startEl.setAttribute('class', 'hide');
+		checkEl.setAttribute('class', 'unhide');
+		questionEl.textContent = "Question here"
         loadQuestion();
+		startbtnEl.parentNode.removeChild(startbtnEl); //js requires you to delete elements from the parent
 
       }
 
@@ -71,12 +92,13 @@
         timerEl.textContent = `Time Left: ${timeleft} secs.`;
         if (timeleft <= 0) {
             showFinalResults();
+			clearInterval(timerid);
         }
       }
 
 
 
-		function loadQuestion(){
+	function loadQuestion(){
 			
 			//set temporary variable for creating radio buttons
 			var radioButton;
@@ -180,10 +202,13 @@
 		
 		function showFinalResults(){
 			
-			document.getElementById('content').innerHTML = '<h2>You Completed The Quiz</h2>';
+			clearInterval(timerid);
+			console.log(timeleft);
+			document.getElementById('content').innerHTML = '<h2>You Completed The Quiz! Congratulations!</h2>';
 			document.getElementById('content').innerHTML += '<p>Below are your results:</p>';
 			document.getElementById('content').innerHTML += '<h2>' + score + ' out of ' + quiz.length + ' questions, ' + Math.round(score/quiz.length * 100) + '%</h2>';
-			
+			document.getElementById('content').innerHTML += '<h2> Your time left is ' + timeleft + ' seconds.</h2>';
+
 			//delete the button
 			var button = document.getElementById('check');
 			button.parentNode.removeChild(button); //js requires you to delete elements from the parent
@@ -192,5 +217,3 @@
 			document.getElementById('question').innerHTML = "";
 			
 		}
-
-        // window.onload = loadQuestion;
