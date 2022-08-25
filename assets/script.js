@@ -13,6 +13,8 @@
     var askingQuestion = true;
 	var checkEl = document.getElementById("check");
 	var questionEl = document.getElementById('question');
+	var wintime = 0;
+	var winpct = 0;
     var quiz = [
         {
             "question"		: 	"Q1: Commonly used data types DO NOT include",
@@ -192,7 +194,7 @@
 				//if we're not on last question, increase question number
 				if(currentQuestion < quiz.length - 1){
 					currentQuestion++;
-					loadQuestion();
+					loadQuestion();		
 				} else {
 					showFinalResults();
 				}
@@ -203,11 +205,13 @@
 		function showFinalResults(){
 			
 			clearInterval(timerid);
-			console.log(timeleft);
+			var winpct = Math.round(score/quiz.length * 100);
 			document.getElementById('content').innerHTML = '<h2>You Completed The Quiz! Congratulations!</h2>';
 			document.getElementById('content').innerHTML += '<p>Below are your results:</p>';
-			document.getElementById('content').innerHTML += '<h2>' + score + ' out of ' + quiz.length + ' questions, ' + Math.round(score/quiz.length * 100) + '%</h2>';
+			document.getElementById('content').innerHTML += '<h2>' + score + ' out of ' + quiz.length + ' questions, ' + winpct + '%</h2>';
 			document.getElementById('content').innerHTML += '<h2> Your time left is ' + timeleft + ' seconds.</h2>';
+			localStorage.setItem("wintimer", timeleft);
+			localStorage.setItem("winpctr", winpct);
 
 			//delete the button
 			var button = document.getElementById('check');
